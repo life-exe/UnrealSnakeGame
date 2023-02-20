@@ -1,0 +1,3 @@
+[submodule "devops_ue"]
+	path = devops_ue
+	url = https://github.com/life-exe/devops_ue
