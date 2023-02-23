@@ -15,6 +15,5 @@ public class SnakeGame : ModuleRules
         {
             PublicDependencyModuleNames.Add("FunctionalTesting");
         }
-
     }
 }
