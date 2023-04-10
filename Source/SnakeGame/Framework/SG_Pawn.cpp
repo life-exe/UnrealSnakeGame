@@ -33,7 +33,7 @@ ASG_Pawn::ASG_Pawn()
     Camera->SetupAttachment(Origin);
 }
 
-void ASG_Pawn::UpdateLocation(const Snake::Dim& InDim, int32 InCellSize, const FTransform& InGridOrigin)
+void ASG_Pawn::UpdateLocation(const SnakeGame::Dim& InDim, int32 InCellSize, const FTransform& InGridOrigin)
 {
     Dim = InDim;
     CellSize = InCellSize;

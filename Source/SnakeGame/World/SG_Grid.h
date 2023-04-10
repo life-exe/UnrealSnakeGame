@@ -8,7 +8,7 @@
 #include "World/SG_WorldTypes.h"
 #include "SG_Grid.generated.h"
 
-namespace Snake
+namespace SnakeGame
 {
 class Grid;
 }
@@ -29,7 +29,7 @@ public:
      * @param Grid  model object
      * @param CellSize  world size of the cell
      */
-    void SetModel(const TSharedPtr<Snake::Grid>& Grid, uint32 CellSize);
+    void SetModel(const TSharedPtr<SnakeGame::Grid>& Grid, uint32 CellSize);
 
     void UpdateColors(const FSnakeColors& Colors);
 
@@ -46,7 +46,7 @@ private:
     UPROPERTY()
     UMaterialInstanceDynamic* GridMaterial;
 
-    Snake::Dim GridDim;
+    SnakeGame::Dim GridDim;
     uint32 CellSize;
     uint32 WorldWidth;
     uint32 WorldHeight;

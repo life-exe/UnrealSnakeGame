@@ -46,7 +46,7 @@ private:
     void NextColor();
 
 private:
-    TUniquePtr<Snake::Game> Game;
+    TUniquePtr<SnakeGame::Game> Game;
     uint32 ColorTableIndex{0};
 
     void FindFog();
