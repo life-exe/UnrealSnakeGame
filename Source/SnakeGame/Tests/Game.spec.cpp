@@ -11,7 +11,7 @@ DEFINE_SPEC(FSnakeGame, "Snake",
 
 void FSnakeGame::Define()
 {
-    using namespace Snake;
+    using namespace SnakeGame;
 
     Describe("CoreGame", [this]() {  //
         It("GridShouldExist",

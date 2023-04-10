@@ -11,7 +11,7 @@ DEFINE_SPEC(FSnakeGrid, "Snake",
 
 void FSnakeGrid::Define()
 {
-    using namespace Snake;
+    using namespace SnakeGame;
 
     Describe("CoreGrid", [this]() {  //
         It("DimsMightIncludeWalls",

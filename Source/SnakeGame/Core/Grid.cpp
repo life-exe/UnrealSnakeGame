@@ -4,7 +4,7 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogGrid, All, All);
 
-using namespace Snake;
+using namespace SnakeGame;
 
 Grid::Grid(const Dim& dim)  //
     : c_dim(Dim{dim.width + 2, dim.height + 2})
