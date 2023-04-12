@@ -22,4 +22,10 @@ struct FSnakeColors : public FTableRowBase
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     FLinearColor SkyAtmosphereColor;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+    FLinearColor SnakeHeadColor;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+    FLinearColor SnakeLinkColor;
 };
