@@ -17,6 +17,7 @@ class AExponentialHeightFog;
 class ASG_Snake;
 class UInputAction;
 class UInputMappingContext;
+class ASG_Food;
 
 UCLASS()
 class SNAKEGAME_API ASG_GameMode : public AGameModeBase
@@ -41,11 +42,14 @@ protected:
     UPROPERTY(EditDefaultsOnly, meta = (ClampMin = "0.01", ClampMax = "10"), Category = "Settings")
     float GameSpeed{1.0f};
 
-    UPROPERTY(EditDefaultsOnly)
+    UPROPERTY(EditDefaultsOnly, Category = "Design")
     TSubclassOf<ASG_Grid> GridVisualClass;
 
-    UPROPERTY(EditDefaultsOnly)
+    UPROPERTY(EditDefaultsOnly, Category = "Design")
     TSubclassOf<ASG_Snake> SnakeVisualClass;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Design")
+    TSubclassOf<ASG_Food> FoodVisualClass;
 
     UPROPERTY(EditDefaultsOnly, Category = "Design")
     TObjectPtr<UDataTable> ColorsTable;
@@ -70,6 +74,9 @@ private:
     ASG_Snake* SnakeVisual;
 
     UPROPERTY()
+    ASG_Food* FoodVisual;
+
+    UPROPERTY()
     AExponentialHeightFog* Fog;
 
     UFUNCTION(Exec, Category = "Console command")
@@ -78,7 +85,7 @@ private:
 private:
     TUniquePtr<SnakeGame::Game> Game;
     uint32 ColorTableIndex{0};
-    SnakeGame::Input SnakeInput{1, 0};
+    SnakeGame::Input SnakeInput{SnakeGame::Input::Default};
 
     SnakeGame::Settings MakeSettings() const;
 

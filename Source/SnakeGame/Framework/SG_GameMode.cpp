@@ -6,6 +6,7 @@
 #include "SnakeGame/Core/Grid.h"
 #include "World/SG_Grid.h"
 #include "World/SG_Snake.h"
+#include "World/SG_Food.h"
 #include "World/SG_WorldTypes.h"
 #include "Framework/SG_Pawn.h"
 #include "Engine/ExponentialHeightFog.h"
@@ -39,6 +40,11 @@ void ASG_GameMode::StartPlay()
     SnakeVisual = GetWorld()->SpawnActorDeferred<ASG_Snake>(SnakeVisualClass, GridOrigin);
     SnakeVisual->SetModel(Game->snake(), CellSize, Game->grid()->dim());
     SnakeVisual->FinishSpawning(GridOrigin);
+
+    // init world food
+    FoodVisual = GetWorld()->SpawnActorDeferred<ASG_Food>(FoodVisualClass, GridOrigin);
+    FoodVisual->SetModel(Game->food(), CellSize, Game->grid()->dim());
+    FoodVisual->FinishSpawning(GridOrigin);
 
     // set pawn location fitting grid in viewport
     auto* PC = GetWorld()->GetFirstPlayerController();
@@ -88,11 +94,9 @@ void ASG_GameMode::UpdateColors()
     const auto* ColorSet = ColorsTable->FindRow<FSnakeColors>(RowName, {});
     if (ColorSet)
     {
-        // update grid
         GridVisual->UpdateColors(*ColorSet);
-
-        // update snake
         SnakeVisual->UpdateColors(*ColorSet);
+        FoodVisual->UpdateColor(ColorSet->FoodColor);
 
         // update scene ambient color via fog
         if (Fog && Fog->GetComponent())
@@ -107,7 +111,7 @@ void ASG_GameMode::SetupInput()
 {
     if (!GetWorld()) return;
 
-    if (auto* PC = Cast<APlayerController>(GetWorld()->GetFirstPlayerController()))
+    if (auto* PC = GetWorld()->GetFirstPlayerController())
     {
         if (auto* InputSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()))
         {
@@ -116,24 +120,24 @@ void ASG_GameMode::SetupInput()
 
         auto* Input = Cast<UEnhancedInputComponent>(PC->InputComponent);
         check(Input);
-        Input->BindAction(MoveForwardInputAction, ETriggerEvent::Triggered, this, &ThisClass::OnMoveForward);
-        Input->BindAction(MoveRightInputAction, ETriggerEvent::Triggered, this, &ThisClass::OnMoveRight);
+        Input->BindAction(MoveForwardInputAction, ETriggerEvent::Started, this, &ThisClass::OnMoveForward);
+        Input->BindAction(MoveRightInputAction, ETriggerEvent::Started, this, &ThisClass::OnMoveRight);
         Input->BindAction(ResetGameInputAction, ETriggerEvent::Started, this, &ThisClass::OnGameReset);
     }
 }
 
 void ASG_GameMode::OnMoveForward(const FInputActionValue& Value)
 {
-    const FVector2D InputValue = Value.Get<FVector2D>();
-    if (InputValue.X == 0.0) return;
-    SnakeInput = SnakeGame::Input{0, static_cast<int8>(InputValue.X)};
+    const float InputValue = Value.Get<float>();
+    if (InputValue == 0.0f) return;
+    SnakeInput = SnakeGame::Input{0, static_cast<int8>(InputValue)};
 }
 
 void ASG_GameMode::OnMoveRight(const FInputActionValue& Value)
 {
-    const FVector2D InputValue = Value.Get<FVector2D>();
-    if (InputValue.X == 0.0) return;
-    SnakeInput = SnakeGame::Input{static_cast<int8>(InputValue.X), 0};
+    const float InputValue = Value.Get<float>();
+    if (InputValue == 0.0f) return;
+    SnakeInput = SnakeGame::Input{static_cast<int8>(InputValue), 0};
 }
 
 void ASG_GameMode::OnGameReset(const FInputActionValue& Value)
@@ -144,7 +148,8 @@ void ASG_GameMode::OnGameReset(const FInputActionValue& Value)
         check(Game.IsValid());
         GridVisual->SetModel(Game->grid(), CellSize);
         SnakeVisual->SetModel(Game->snake(), CellSize, Game->grid()->dim());
-        SnakeInput = SnakeGame::Input{1, 0};
+        FoodVisual->SetModel(Game->food(), CellSize, Game->grid()->dim());
+        SnakeInput = SnakeGame::Input::Default;
         NextColor();
     }
 }
@@ -165,6 +170,6 @@ SnakeGame::Settings ASG_GameMode::MakeSettings() const
     GS.gridDims = SnakeGame::Dim{GridDims.X, GridDims.Y};
     GS.gameSpeed = GameSpeed;
     GS.snake.defaultSize = SnakeDefaultSize;
-    GS.snake.startPosition = SnakeGame::Position{GridDims.X / 2 + 1, GridDims.Y / 2 + 1};  // @todo: proper way to handle +1
+    GS.snake.startPosition = SnakeGame::Grid::center(GridDims.X, GridDims.Y);
     return GS;
 }
