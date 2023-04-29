@@ -16,7 +16,7 @@ class SNAKEGAME_API ASG_SnakeLink : public AActor
 public:
     ASG_SnakeLink();
 
-    void UpdateColors(const FLinearColor& Color);
+    void UpdateColor(const FLinearColor& Color);
     void UpdateScale(uint32 CellSize);
 
 protected:
