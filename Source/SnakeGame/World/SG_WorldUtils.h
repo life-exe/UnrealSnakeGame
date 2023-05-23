@@ -1,3 +1,5 @@
+// Snake Game, Copyright LifeEXE. All Rights Reserved.
+
 #pragma once
 
 #include "SnakeGame/Core/Types.h"

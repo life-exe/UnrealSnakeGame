@@ -1,3 +1,5 @@
+// Snake Game, Copyright LifeEXE. All Rights Reserved.
+
 #if WITH_AUTOMATION_TESTS
 
 #include "SnakeGame/Tests/Utils/TestUtils.h"

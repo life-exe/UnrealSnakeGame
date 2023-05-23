@@ -8,6 +8,7 @@
 namespace SnakeGame
 {
 class Food
+
 {
 public:
     Food() = default;

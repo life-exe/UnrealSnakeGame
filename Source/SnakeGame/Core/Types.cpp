@@ -1,6 +1,8 @@
+// Snake Game, Copyright LifeEXE. All Rights Reserved.
+
 #include "Types.h"
 
 using namespace SnakeGame;
 
-Position Position::Zero = Position(0, 0);
-Input Input::Default = Input{1, 0};
+const Position Position::Zero = Position(0, 0);
+const Input Input::Default = Input{1, 0};

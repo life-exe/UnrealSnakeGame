@@ -32,6 +32,8 @@ public:
     void SetModel(const TSharedPtr<SnakeGame::Snake>& Snake, uint32 CellSize, const SnakeGame::Dim& Dims);
     void UpdateColors(const FSnakeColors& Colors);
 
+    void Explode();
+
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     TSubclassOf<AActor> SnakeHeadClass;
