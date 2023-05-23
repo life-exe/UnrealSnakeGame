@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Types.h"
+#include "Utils.h"
 
 namespace SnakeGame
 {
@@ -11,7 +12,7 @@ namespace SnakeGame
 class Grid
 {
 public:
-    Grid(const Dim& dim);
+    Grid(const Dim& dim, const IPositionRandomizerPtr& randomizer = MakeShared<PositionRandomizer>());
 
     /**
      * Returns center position in grid (walls included)
@@ -67,13 +68,14 @@ private:
         {CellType::Food, {}},   //
     };
 
+    TSharedPtr<IPositionRandomizer> m_positionRandomizer;
+
     void initWalls();
     void updateInternal(const Position& position, CellType cellType);
     void freeCellsByType(CellType cellType);
 
     FORCEINLINE uint32 posToIndex(uint32 x, uint32 y) const;
     FORCEINLINE uint32 posToIndex(const Position& position) const;
-    FORCEINLINE Position indexToPos(uint32 index) const;
 };
 
 }  // namespace SnakeGame

@@ -31,7 +31,7 @@ struct Position
 
     FORCEINLINE bool operator==(const Position& rhs) { return x == rhs.x && y == rhs.y; }
 
-    static Position Zero;
+    static const Position Zero;
 };
 
 struct Input
@@ -44,7 +44,7 @@ struct Input
         return (x == -rhs.x && x != 0) || (y == -rhs.y && y != 0);
     }
 
-    static Input Default;
+    static const Input Default;
 };
 
 enum class CellType
@@ -68,5 +68,14 @@ struct Settings
 
 using TSnakeList = TDoubleLinkedList<Position>;
 using TPositionPtr = TSnakeList::TDoubleLinkedListNode;
+
+enum class GameplayEvent
+{
+    GameOver = 0,
+    GameCompleted,
+    FoodTaken
+};
+
+using GameplayEventCallback = TFunction<void(GameplayEvent)>;
 
 }  // namespace SnakeGame

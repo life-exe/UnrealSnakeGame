@@ -88,7 +88,7 @@ void FSnakeGrid::Define()
                 TestTrueExpr(FoodPosition == Position(2, 2));
             });
 
-        // game completed, bo empty cells for food generation (rare, almost impossible scenario)
+        // game completed, no empty cells for food generation (rare, almost impossible scenario)
         It("EmptyCellCannotBeFoundWhenSnakeFillGrid",
             [this]()
             {

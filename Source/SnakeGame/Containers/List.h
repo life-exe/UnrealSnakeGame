@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Snake Game, Copyright LifeEXE. All Rights Reserved.
 
 #pragma once
 

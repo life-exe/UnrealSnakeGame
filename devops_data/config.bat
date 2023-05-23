@@ -8,7 +8,7 @@
 
 rem Unreal Engine params
 ::set EnginePath_4=C:\Epic Games\UE Binary\UE_4.27
-set EnginePath=C:\Epic Games\UE Binary\UE_5.1
+set EnginePath=C:\Epic Games\UE Binary\UE_5.2
 set VersionSelector=C:\Program Files (x86)\Epic Games\Launcher\Engine\Binaries\Win64\UnrealVersionSelector.exe
 rem Editor path (Note: path for UE4: "..\UE4Editor.exe")
 set EditorPath=%EnginePath%\Engine\Binaries\Win64\UnrealEditor.exe
