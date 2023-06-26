@@ -11,6 +11,7 @@ class IPositionRandomizer
 {
 public:
     virtual bool generatePosition(const Dim& dim, const TArray<CellType>& cells, Position& position) const = 0;
+    virtual ~IPositionRandomizer() = default;
 };
 
 class PositionRandomizer : public IPositionRandomizer
