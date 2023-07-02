@@ -129,6 +129,10 @@ void FSnakeWorld::Define()
                     TestTrueExpr(WorldUtils::FormatSeconds(10.0f).EqualTo(FText::FromString("00:10")));
                     TestTrueExpr(WorldUtils::FormatSeconds(65.0f).EqualTo(FText::FromString("01:05")));
                     TestTrueExpr(WorldUtils::FormatSeconds(605.0f).EqualTo(FText::FromString("10:05")));
+                    TestTrueExpr(WorldUtils::FormatSeconds(3599.0f).EqualTo(FText::FromString("59:59")));
+                    TestTrueExpr(WorldUtils::FormatSeconds(3600.0f).EqualTo(FText::FromString("60:00")));
+                    TestTrueExpr(WorldUtils::FormatSeconds(3601.0f).EqualTo(FText::FromString("60:01")));
+                    TestTrueExpr(WorldUtils::FormatSeconds(4200.0f).EqualTo(FText::FromString("70:00")));
                 });
 
             It("ScoreShouldBeFormattedCorrectly",
