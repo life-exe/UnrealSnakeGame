@@ -43,6 +43,7 @@ void FSnakeGame::Define()
             [this]()
             {
                 GS.gridDims = Dim{10, 10};
+                GS.snake.defaultSize = 4;
                 GS.snake.startPosition = Grid::center(GS.gridDims.width, GS.gridDims.height);
                 GS.gameSpeed = 1.0f;
                 CoreGame = MakeUnique<Game>(GS);
@@ -74,7 +75,25 @@ void FSnakeGame::Define()
                 CoreGame->update(1.0f, Input::Default);
                 TestTrueExpr(bGameOver);
             });
+        It("SnakeShouldMoveCorrectlyNextToItsTail",
+            [this]()
+            {
+                bool bGameOver{false};
+                CoreGame->subscribeOnGameplayEvent(
+                    [&](GameplayEvent Event)
+                    {
+                        if (Event == GameplayEvent::GameOver)
+                        {
+                            bGameOver = true;
+                        }
+                    });
 
+                CoreGame->update(GS.gameSpeed, {0, 1});   // move down
+                CoreGame->update(GS.gameSpeed, {-1, 0});  // move left
+                CoreGame->update(GS.gameSpeed, {0, -1});  // move up
+
+                TestTrueExpr(!bGameOver);  // the snake shouldn't bite its tail
+            });
     });
 
     Describe("Core.Game", [this]() {  //
