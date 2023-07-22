@@ -49,7 +49,7 @@ void FSnakeFramework::Define()
             BeforeEach(
                 [this]()
                 {
-                    AutomationOpenMap("GameLevel");
+                    AutomationOpenMap("/Game/Levels/GameLevel");
                     World = GetTestGameWorld();
                 });
             It("ClassesMightBeSetupCorrectly",
