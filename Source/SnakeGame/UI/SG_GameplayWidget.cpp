@@ -14,7 +14,10 @@ void USG_GameplayWidget::SetGameTime(float Seconds)
 
 void USG_GameplayWidget::SetScore(uint32 Score)
 {
-    ScoreText->SetText(SnakeGame::WorldUtils::FormatScore(Score));
+    if (ScoreText)
+    {
+        ScoreText->SetText(SnakeGame::WorldUtils::FormatScore(Score));
+    }
 }
 
 void USG_GameplayWidget::SetResetGameKeyName(const FString& ResetGameKeyName)
