@@ -110,6 +110,51 @@ void FSnakeFramework::Define()
                         TestTrueExpr(GameUserSettings->GameSpeed() == Speed);
                     }
                 });
+
+            It("GridSizeOptionsMightExist",
+                [this]()
+                {
+                    const TArray<FString> TestOptions{"30x10", "50x15", "80x20"};
+                    const auto GridOptions = GameUserSettings->GridSizeOptions();
+
+                    TestTrueExpr(TestOptions.Num() == GridOptions.Num());
+
+                    for (const auto& Options : TestOptions)
+                    {
+                        TestTrueExpr(GridOptions.Find(Options) != INDEX_NONE);
+                    }
+                });
+
+            It("GridSizeElemCouldBeFindByName",
+                [this]()
+                {
+                    const TArray<TTuple<FString, EGridSize>> TestData{
+                        {"30x10", EGridSize::Size_30x10}, {"50x15", EGridSize::Size_50x15}, {"80x20", EGridSize::Size_80x20}};
+
+                    for (const auto& [Name, GridSize] : TestData)
+                    {
+                        TestTrueExpr(GridSize == GameUserSettings->GridSizeByName(Name));
+                    }
+                });
+
+            It("GridSizeElemMightBeDefaultIfNameDoesntExist",
+                [this]() { TestTrueExpr(EGridSize::Size_50x15 == GameUserSettings->GridSizeByName("xxxxxxxxxxxxxxxxxxxxx")); });
+
+            It("GridSizeSettingsCanBeSaved",
+                [this]()
+                {
+                    const TArray<TTuple<FString, EGridSize, SnakeGame::Dim>> TestData{
+                        {"30x10", EGridSize::Size_30x10, SnakeGame::Dim{30, 10}}, {"50x15", EGridSize::Size_50x15, SnakeGame::Dim{50, 15}},
+                        {"80x20", EGridSize::Size_80x20, SnakeGame::Dim{80, 20}}};
+
+                    for (const auto& [Name, GridSizeType, GridSize] : TestData)
+                    {
+                        GameUserSettings->SaveSnakeSettings(EGameSpeed::Snake, GridSizeType);
+                        TestTrueExpr(GameUserSettings->CurrentGridSizeOption().Equals(Name));
+                        TestTrueExpr(GameUserSettings->GridSize().width == GridSize.width);
+                        TestTrueExpr(GameUserSettings->GridSize().height == GridSize.height);
+                    }
+                });
         });
 }
 
