@@ -9,7 +9,7 @@ public class SnakeGame : ModuleRules
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
         PublicDependencyModuleNames.AddRange(
-            new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "EnhancedInput", "Niagara" });
+            new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "EnhancedInput", "Niagara", "SlateCore" });
         PublicIncludePaths.AddRange(new string[] { "SnakeGame" });
 
         if (Target.Configuration != UnrealTargetConfiguration.Shipping)
