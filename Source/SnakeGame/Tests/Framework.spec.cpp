@@ -76,9 +76,9 @@ void FSnakeFramework::Define()
 
                     TestTrueExpr(TestOptions.Num() == SpeedOptions.Num());
 
-                    for (const auto& Options : TestOptions)
+                    for (const auto& Option : TestOptions)
                     {
-                        TestTrueExpr(SpeedOptions.Find(Options) != INDEX_NONE);
+                        TestTrueExpr(SpeedOptions.Find(Option) != INDEX_NONE);
                     }
                 });
 
@@ -119,9 +119,9 @@ void FSnakeFramework::Define()
 
                     TestTrueExpr(TestOptions.Num() == GridOptions.Num());
 
-                    for (const auto& Options : TestOptions)
+                    for (const auto& Option : TestOptions)
                     {
-                        TestTrueExpr(GridOptions.Find(Options) != INDEX_NONE);
+                        TestTrueExpr(GridOptions.Find(Option) != INDEX_NONE);
                     }
                 });
 

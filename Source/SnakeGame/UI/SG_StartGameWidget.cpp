@@ -4,6 +4,7 @@
 #include "Components/Button.h"
 #include "Components/ComboBoxString.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Framework/SG_GameUserSettings.h"
 
 void USG_StartGameWidget::NativeOnInitialized()
@@ -15,6 +16,9 @@ void USG_StartGameWidget::NativeOnInitialized()
 
     check(StartGameButton);
     StartGameButton->OnClicked.AddDynamic(this, &ThisClass::OnStartGame);
+
+    check(CloseGameButton);
+    CloseGameButton->OnClicked.AddDynamic(this, &ThisClass::OnCloseGame);
 
     InitComboBox(
         GameSpeedComboBox,                                   //
@@ -46,6 +50,11 @@ void USG_StartGameWidget::OnStartGame()
     {
         UGameplayStatics::OpenLevel(GetWorld(), FName(GameLevel.GetAssetName()));
     }
+}
+
+void USG_StartGameWidget::OnCloseGame()
+{
+    UKismetSystemLibrary::QuitGame(GetWorld(), GetOwningPlayer(), EQuitPreference::Quit, false);
 }
 
 void USG_StartGameWidget::OnSelectionChanged(FString SelectedItem, ESelectInfo::Type SelectionType)
