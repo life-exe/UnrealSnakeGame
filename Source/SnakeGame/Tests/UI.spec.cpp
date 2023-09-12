@@ -6,13 +6,29 @@
 #include "Misc/AutomationTest.h"
 #include "SnakeGame/Tests/Utils/TestUtils.h"
 #include "UI/SG_StartGameWidget.h"
+#include "UI/SG_GameplayWidget.h"
+#include "UI/SG_GameOverWidget.h"
 #include "Components/Button.h"
 #include "Components/ComboBoxString.h"
+#include "Components/TextBlock.h"
 
 BEGIN_DEFINE_SPEC(FSnakeUI, "Snake",
     EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::ProductFilter | EAutomationTestFlags::HighPriority)
 UWorld* World;
 END_DEFINE_SPEC(FSnakeUI)
+
+DEFINE_LATENT_AUTOMATION_COMMAND_ONE_PARAMETER(FInputChangedToUI, UWorld*, World);
+bool FInputChangedToUI::Update()
+{
+    if (!World) return true;
+
+    auto* PC = World->GetFirstPlayerController();
+    if (!PC) return true;
+
+    if (PC->bShowMouseCursor) return true;
+
+    return false;
+}
 
 void FSnakeUI::Define()
 {
@@ -21,16 +37,12 @@ void FSnakeUI::Define()
     Describe("UI",
         [this]()
         {
-            BeforeEach(
+            It("AllMenuComponentsShouldExist",
                 [this]()
                 {
                     AutomationOpenMap("/Game/Levels/MenuLevel");
                     World = GetTestGameWorld();
-                });
 
-            It("AllMenuComponentsShouldExist",
-                [this]()
-                {
                     auto* StartGameWidget = FindWidgetByClass<USG_StartGameWidget>();
 
                     auto* StartGameButton = Cast<UButton>(FindWidgetByName(StartGameWidget, "StartGameButton"));
@@ -46,8 +58,46 @@ void FSnakeUI::Define()
                     TestTrueExpr(GridSizeCombobox != nullptr);
                 });
 
-            xIt("AllGameplayComponentsShouldExist", [this]() { unimplemented(); });
-            xIt("AllGameOverComponentsShouldExist", [this]() { unimplemented(); });
+            It("AllGameplayComponentsShouldExist",
+                [this]()
+                {
+                    AutomationOpenMap("/Game/Levels/GameLevel");
+                    World = GetTestGameWorld();
+
+                    auto* GameplayWidget = FindWidgetByClass<USG_GameplayWidget>();
+
+                    auto* TimeText = Cast<UTextBlock>(FindWidgetByName(GameplayWidget, "TimeText"));
+                    TestTrueExpr(TimeText != nullptr);
+
+                    auto* ScoreText = Cast<UTextBlock>(FindWidgetByName(GameplayWidget, "ScoreText"));
+                    TestTrueExpr(ScoreText != nullptr);
+
+                    auto* ResetGameText = Cast<UTextBlock>(FindWidgetByName(GameplayWidget, "ResetGameText"));
+                    TestTrueExpr(ResetGameText != nullptr);
+                });
+
+            It("AllGameOverComponentsShouldExist",
+                [this]()
+                {
+                    AutomationOpenMap("/Game/Levels/GameLevel");
+                    World = GetTestGameWorld();
+                    ADD_LATENT_AUTOMATION_COMMAND(FInputChangedToUI(World));
+                    ADD_LATENT_AUTOMATION_COMMAND(FFunctionLatentCommand(
+                        [this]()
+                        {
+                            auto* GameOverWidget = FindWidgetByClass<USG_GameOverWidget>();
+
+                            auto* ScoreText = Cast<UTextBlock>(FindWidgetByName(GameOverWidget, "ScoreText"));
+                            TestTrueExpr(ScoreText != nullptr);
+
+                            auto* ResetGameText = Cast<UTextBlock>(FindWidgetByName(GameOverWidget, "ResetGameText"));
+                            TestTrueExpr(ResetGameText != nullptr);
+
+                            auto* BackToMenuButton = Cast<UButton>(FindWidgetByName(GameOverWidget, "BackToMenuButton"));
+                            TestTrueExpr(BackToMenuButton != nullptr);
+                            return true;
+                        }));
+                });
         });
 }
 
