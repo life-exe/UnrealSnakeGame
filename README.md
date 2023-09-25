@@ -2,8 +2,10 @@
 
 Classic Snake videogame, made with love from scratch with Unreal Engine.
 
+## Links
+
  - [Docs](https://life-exe.github.io/UnrealSnakeGame/)
- - [Playlist](https://youtube.com/playlist?list=PL2XQZYeh2Hh-pu_0ZUxPENrXMRKyFqyi6&si=yn6zynRPfDygNt7u)
+ - [Youtube playlist](https://youtube.com/playlist?list=PL2XQZYeh2Hh-pu_0ZUxPENrXMRKyFqyi6&si=yn6zynRPfDygNt7u)
  - [Itch](https://life-exe.itch.io/unreal-snake-game)
  - [Wiki](https://lifeexe-art.gitbook.io/snakegame)
 
