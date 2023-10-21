@@ -19,32 +19,35 @@ class PositionRandomizer : public IPositionRandomizer
 public:
     virtual bool generatePosition(const Dim& dim, const TArray<CellType>& cells, Position& position) const override
     {
-        const auto gridSize = dim.width * dim.height;
-        const uint32 index = FMath::RandRange(0, gridSize - 1);
+        const uint32 startX = FMath::RandRange(1, dim.width - 2);
+        const uint32 startY = FMath::RandRange(1, dim.height - 2);
+        Position randomPosition = {startX, startY};
 
-        for (uint32 i = index; i < gridSize; ++i)
+        do
         {
-            if (cells[i] == CellType::Empty)
+            const uint32 currentIndex = posToIndex(randomPosition, dim);
+            if (cells[currentIndex] == CellType::Empty)
             {
-                position = indexToPos(i, dim);
+                position = randomPosition;
                 return true;
             }
-        }
 
-        for (uint32 i = 0; i < index; ++i)
-        {
-            if (cells[i] == CellType::Empty)
+            if (++randomPosition.x > dim.width - 2)
             {
-                position = indexToPos(i, dim);
-                return true;
+                randomPosition.x = 1;
+                if (++randomPosition.y > dim.height - 2)
+                {
+                    randomPosition.y = 1;
+                }
             }
-        }
+        } while (randomPosition.x != startX || randomPosition.y != startY);
 
         return false;
     }
 
 private:
     FORCEINLINE Position indexToPos(uint32 index, const Dim& dim) const { return Position(index % dim.width, index / dim.width); }
+    FORCEINLINE uint32 posToIndex(const Position& position, const Dim& dim) const { return position.x + position.y * dim.width; }
 };
 
 using IPositionRandomizerPtr = TSharedPtr<IPositionRandomizer>;

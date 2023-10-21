@@ -7,6 +7,7 @@
 #include "SnakeGame/Core/Game.h"
 #include "SnakeGame/Core/Grid.h"
 #include "SnakeGame/Core/Utils.h"
+#include "SnakeGame/Tests/Utils/SnakeTestUtils.h"
 
 using namespace SnakeGame;
 
@@ -15,26 +16,6 @@ BEGIN_DEFINE_SPEC(FSnakeGame, "Snake",
 TUniquePtr<Game> CoreGame;
 Settings GS;
 END_DEFINE_SPEC(FSnakeGame)
-
-class MockPositionRandomizer : public IPositionRandomizer
-{
-public:
-    virtual bool generatePosition(const Dim& dim, const TArray<CellType>& cells, Position& position) const override
-    {
-        position = m_positions[m_index++];
-        return true;
-    }
-
-    void setPositions(const TArray<Position>& positions)
-    {
-        m_positions = positions;
-        m_index = 0;
-    }
-
-private:
-    TArray<Position> m_positions;
-    mutable int32 m_index{0};
-};
 
 void FSnakeGame::Define()
 {
@@ -49,9 +30,9 @@ void FSnakeGame::Define()
                 CoreGame = MakeUnique<Game>(GS);
             });
 
-        It("GridMightExist", [this]() { TestTrueExpr(CoreGame->grid().IsValid()); });
-        It("SnakeMightExist", [this]() { TestTrueExpr(CoreGame->snake().IsValid()); });
-        It("FoodMightExist", [this]() { TestTrueExpr(CoreGame->food().IsValid()); });
+        It("GridShouldExist", [this]() { TestTrueExpr(CoreGame->grid().IsValid()); });
+        It("SnakeShouldExist", [this]() { TestTrueExpr(CoreGame->snake().IsValid()); });
+        It("FoodShouldExist", [this]() { TestTrueExpr(CoreGame->food().IsValid()); });
         It("GameCanBeOver",
             [this]()
             {
@@ -81,7 +62,7 @@ void FSnakeGame::Define()
         It("FoodCanBeTaken",
             [this]()
             {
-                auto Randomizer = MakeShared<MockPositionRandomizer>();
+                auto Randomizer = MakeShared<Test::MockPositionRandomizer>();
                 Randomizer->setPositions({Position{7, 6}, Position{9, 6}, Position::Zero});
 
                 GS.gridDims = Dim{10, 10};
@@ -120,8 +101,10 @@ void FSnakeGame::Define()
         It("SnakeShouldMoveCorrectlyNextToItsTail",
             [this]()
             {
-                auto Randomizer = MakeShared<MockPositionRandomizer>();
-                Randomizer->setPositions({Position{1, 1}, Position{1, 1}, Position{1, 1}, Position{1, 1}});
+                auto Randomizer = MakeShared<Test::MockPositionRandomizer>();
+                TArray<Position> Positions;
+                Positions.Init(Position{1, 1}, 4);
+                Randomizer->setPositions(Positions);
 
                 GS.gridDims = Dim{10, 10};
                 GS.snake.defaultSize = 4;

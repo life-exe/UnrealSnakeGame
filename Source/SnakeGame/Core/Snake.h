@@ -25,6 +25,12 @@ public:
     Position head() const { return m_links.GetHead()->GetValue(); }
 
     /**
+     * Returns tail position
+     * @return Position  tail position
+     */
+    Position tail() const { return m_links.GetTail()->GetValue(); }
+
+    /**
      * Moves snake links with a given input
      * @param input  user input
      */

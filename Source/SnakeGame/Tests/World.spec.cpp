@@ -37,7 +37,7 @@ void FSnakeWorld::Define()
                     AutomationOpenMap("/Game/Tests/TestEmptyLevel");
                     World = GetTestGameWorld();
 
-                    constexpr char* GridBPName = "Blueprint'/Game/World/BP_SnakeGrid.BP_SnakeGrid'";
+                    constexpr const char* GridBPName = "Blueprint'/Game/World/BP_SnakeGrid.BP_SnakeGrid'";
 
                     Dims = SnakeGame::Dim{10, 10};
                     CellSize = 20;
@@ -52,7 +52,7 @@ void FSnakeWorld::Define()
                     GridStaticMesh = Cast<UStaticMeshComponent>(Comp);
                 });
 
-            It("StaticGridMightHaveCorrectTransform",
+            It("StaticGridShouldHaveCorrectTransform",
                 [this]()
                 {
                     const FBox Box = GridStaticMesh->GetStaticMesh()->GetBoundingBox();
@@ -65,7 +65,7 @@ void FSnakeWorld::Define()
                     TestTrueExpr(GridStaticMesh->GetRelativeScale3D().Equals(FVector(WorldHeight / Size.X, WorldWidth / Size.Y, 1.0)));
                 });
 
-            It("ColorsMightBeSetupCorrectly",
+            It("ColorsShouldBeSetupCorrectly",
                 [this]()
                 {
                     FSnakeColors Colors;
