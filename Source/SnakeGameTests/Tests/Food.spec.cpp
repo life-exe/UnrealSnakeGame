@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Misc/AutomationTest.h"
-#include "Core/Food.h"
-#include "Core/Types.h"
+#include "SnakeGame/Core/Food.h"
+#include "SnakeGame/Core/Types.h"
 
 DEFINE_SPEC(FSnakeFood, "Snake",
     EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::ProductFilter | EAutomationTestFlags::HighPriority)

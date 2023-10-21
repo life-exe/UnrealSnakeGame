@@ -7,7 +7,7 @@
 #include "SnakeGame/Core/Game.h"
 #include "SnakeGame/Core/Grid.h"
 #include "SnakeGame/Core/Utils.h"
-#include "SnakeGame/Tests/Utils/SnakeTestUtils.h"
+#include "SnakeGameTests/Tests/Utils/SnakeTestUtils.h"
 
 using namespace SnakeGame;
 

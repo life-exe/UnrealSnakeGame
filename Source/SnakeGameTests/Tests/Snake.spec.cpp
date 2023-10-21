@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Misc/AutomationTest.h"
-#include "Core/Snake.h"
-#include "Core/Types.h"
+#include "SnakeGame/Core/Snake.h"
+#include "SnakeGame/Core/Types.h"
 
 using namespace SnakeGame;
 

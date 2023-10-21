@@ -7,14 +7,14 @@
 
 namespace SnakeGame
 {
-class IPositionRandomizer
+class SNAKEGAME_API IPositionRandomizer
 {
 public:
     virtual bool generatePosition(const Dim& dim, const TArray<CellType>& cells, Position& position) const = 0;
     virtual ~IPositionRandomizer() = default;
 };
 
-class PositionRandomizer : public IPositionRandomizer
+class SNAKEGAME_API PositionRandomizer : public IPositionRandomizer
 {
 public:
     virtual bool generatePosition(const Dim& dim, const TArray<CellType>& cells, Position& position) const override

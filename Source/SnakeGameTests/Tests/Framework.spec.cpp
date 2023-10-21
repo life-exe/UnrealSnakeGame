@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Misc/AutomationTest.h"
-#include "SnakeGame/Tests/Utils/TestUtils.h"
+#include "SnakeGameTests/Tests/Utils/TestUtils.h"
 #include "SnakeGame/Framework/SG_GameMode.h"
 #include "SnakeGame/Framework/SG_Pawn.h"
 #include "Misc/PathViews.h"
-#include "Framework/SG_GameUserSettings.h"
+#include "SnakeGame/Framework/SG_GameUserSettings.h"
 
 BEGIN_DEFINE_SPEC(FSnakeFramework, "Snake",
     EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::ProductFilter | EAutomationTestFlags::HighPriority)

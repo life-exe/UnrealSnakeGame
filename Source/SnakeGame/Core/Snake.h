@@ -7,7 +7,7 @@
 
 namespace SnakeGame
 {
-class Snake
+class SNAKEGAME_API Snake
 {
 public:
     Snake(const Settings::Snake& settings);

@@ -13,7 +13,7 @@ class Grid;
 class Snake;
 class Food;
 
-class Game
+class SNAKEGAME_API Game
 {
 public:
     Game(const Settings& settings, const IPositionRandomizerPtr& randomizer = MakeShared<PositionRandomizer>());

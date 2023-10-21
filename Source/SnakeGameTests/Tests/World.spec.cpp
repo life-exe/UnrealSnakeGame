@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Misc/AutomationTest.h"
-#include "SnakeGame/Tests/Utils/TestUtils.h"
+#include "SnakeGameTests/Tests/Utils/TestUtils.h"
 #include "SnakeGame/World/SG_Grid.h"
 #include "SnakeGame/World/SG_Snake.h"
 #include "SnakeGame/World/SG_Food.h"
