@@ -23,7 +23,7 @@ void FSnakeFramework::Define()
     Describe("Framework",
         [this]()
         {
-            It("GameMapMightExist",
+            It("GameMapShouldExist",
                 [this]()
                 {
                     const TArray<FString> SnakeGameMaps = {"GameLevel", "MenuLevel"};
@@ -54,7 +54,7 @@ void FSnakeFramework::Define()
                     AutomationOpenMap("/Game/Levels/GameLevel");
                     World = GetTestGameWorld();
                 });
-            It("ClassesMightBeSetupCorrectly",
+            It("ClassesShouldBeSetupCorrectly",
                 [this]()
                 {
                     TestNotNull("Snake game mode set up", Cast<ASG_GameMode>(World->GetAuthGameMode()));
@@ -68,7 +68,7 @@ void FSnakeFramework::Define()
         {
             BeforeEach([this]() { GameUserSettings = NewObject<USG_GameUserSettings>(); });
 
-            It("SpeedOptionsMightExist",
+            It("SpeedOptionsShouldExist",
                 [this]()
                 {
                     const TArray<FString> TestOptions{"Worm", "Snake", "Python"};
@@ -94,7 +94,7 @@ void FSnakeFramework::Define()
                     }
                 });
 
-            It("SpeedElemMightBeDefaultIfNameDoesntExist",
+            It("SpeedElemShouldBeDefaultIfNameDoesntExist",
                 [this]() { TestTrueExpr(EGameSpeed::Snake == GameUserSettings->GameSpeedByName("xxxxxxxxxxxxxxxxxxxxx")); });
 
             It("SpeedSettingsCanBeSaved",
@@ -111,7 +111,7 @@ void FSnakeFramework::Define()
                     }
                 });
 
-            It("GridSizeOptionsMightExist",
+            It("GridSizeOptionsShouldExist",
                 [this]()
                 {
                     const TArray<FString> TestOptions{"30x10", "50x15", "80x20"};
@@ -137,7 +137,7 @@ void FSnakeFramework::Define()
                     }
                 });
 
-            It("GridSizeElemMightBeDefaultIfNameDoesntExist",
+            It("GridSizeElemShouldBeDefaultIfNameDoesntExist",
                 [this]() { TestTrueExpr(EGridSize::Size_50x15 == GameUserSettings->GridSizeByName("xxxxxxxxxxxxxxxxxxxxx")); });
 
             It("GridSizeSettingsCanBeSaved",

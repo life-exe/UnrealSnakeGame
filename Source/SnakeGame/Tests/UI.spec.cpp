@@ -17,17 +17,10 @@ BEGIN_DEFINE_SPEC(FSnakeUI, "Snake",
 UWorld* World;
 END_DEFINE_SPEC(FSnakeUI)
 
-DEFINE_LATENT_AUTOMATION_COMMAND_ONE_PARAMETER(FInputChangedToUI, UWorld*, World);
-bool FInputChangedToUI::Update()
+DEFINE_LATENT_AUTOMATION_COMMAND_ONE_PARAMETER(FGameOverWidgetVisibleLatentCommand, USG_GameOverWidget*, Widget);
+bool FGameOverWidgetVisibleLatentCommand::Update()
 {
-    if (!World) return true;
-
-    auto* PC = World->GetFirstPlayerController();
-    if (!PC) return true;
-
-    if (PC->bShowMouseCursor) return true;
-
-    return false;
+    return Widget->GetVisibility() == ESlateVisibility::Visible;
 }
 
 void FSnakeUI::Define()
@@ -44,6 +37,7 @@ void FSnakeUI::Define()
                     World = GetTestGameWorld();
 
                     auto* StartGameWidget = FindWidgetByClass<USG_StartGameWidget>();
+                    TestTrueExpr(StartGameWidget != nullptr);
 
                     auto* StartGameButton = Cast<UButton>(FindWidgetByName(StartGameWidget, "StartGameButton"));
                     TestTrueExpr(StartGameButton != nullptr);
@@ -65,6 +59,7 @@ void FSnakeUI::Define()
                     World = GetTestGameWorld();
 
                     auto* GameplayWidget = FindWidgetByClass<USG_GameplayWidget>();
+                    TestTrueExpr(GameplayWidget != nullptr);
 
                     auto* TimeText = Cast<UTextBlock>(FindWidgetByName(GameplayWidget, "TimeText"));
                     TestTrueExpr(TimeText != nullptr);
@@ -81,12 +76,15 @@ void FSnakeUI::Define()
                 {
                     AutomationOpenMap("/Game/Levels/GameLevel");
                     World = GetTestGameWorld();
-                    ADD_LATENT_AUTOMATION_COMMAND(FInputChangedToUI(World));
-                    ADD_LATENT_AUTOMATION_COMMAND(FFunctionLatentCommand(
-                        [this]()
-                        {
-                            auto* GameOverWidget = FindWidgetByClass<USG_GameOverWidget>();
+                    auto* GameOverWidget = FindWidgetByClass<USG_GameOverWidget>();
 
+                    TestTrueExpr(GameOverWidget != nullptr);
+                    TestTrueExpr(GameOverWidget->GetVisibility() == ESlateVisibility::Collapsed);
+
+                    ADD_LATENT_AUTOMATION_COMMAND(FGameOverWidgetVisibleLatentCommand(GameOverWidget));
+                    ADD_LATENT_AUTOMATION_COMMAND(FFunctionLatentCommand(
+                        [this, GameOverWidget]()
+                        {
                             auto* ScoreText = Cast<UTextBlock>(FindWidgetByName(GameOverWidget, "ScoreText"));
                             TestTrueExpr(ScoreText != nullptr);
 
