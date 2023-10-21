@@ -28,7 +28,7 @@ void FSnake::Define()
                     CoreSnake = MakeUnique<Snake>(Config);
                 });
 
-            It("MightBeInitCorrectly",
+            It("ShouldBeInitCorrectly",
                 [this]()
                 {
                     Position LinkPos = Config.startPosition;

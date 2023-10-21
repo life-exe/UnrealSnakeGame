@@ -33,8 +33,5 @@ void USG_GameOverWidget::SetResetGameKeyName(const FString& ResetGameKeyName)
 
 void USG_GameOverWidget::OnBackToMenu()
 {
-    if (!MenuLevel.IsNull())
-    {
-        UGameplayStatics::OpenLevel(GetWorld(), FName(MenuLevel.GetAssetName()));
-    }
+    UGameplayStatics::OpenLevelBySoftObjectPtr(GetWorld(), MenuLevel);
 }
