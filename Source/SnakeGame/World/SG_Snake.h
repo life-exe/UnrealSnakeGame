@@ -14,7 +14,7 @@ class Snake;
 }
 
 class ASG_SnakeLink;
-class USG_SnakeObjectPool;
+class USG_ObjectPool;
 
 UCLASS()
 class SNAKEGAME_API ASG_Snake : public AActor
@@ -52,7 +52,7 @@ private:
     TArray<TObjectPtr<ASG_SnakeLink>> SnakeLinks;
 
     UPROPERTY()
-    TObjectPtr<USG_SnakeObjectPool> SnakeObjectPool{nullptr};
+    TObjectPtr<USG_ObjectPool> SnakeObjectPool{nullptr};
 
     void InitObjectPool();
 };

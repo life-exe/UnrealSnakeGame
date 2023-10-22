@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "SG_SnakeObjectPool.generated.h"
+#include "SG_ObjectPool.generated.h"
 
 UCLASS()
-class SNAKEGAME_API USG_SnakeObjectPool : public UObject
+class SNAKEGAME_API USG_ObjectPool : public UObject
 {
     GENERATED_BODY()
 
@@ -31,6 +31,7 @@ public:
 
         ActorType* Actor = Pool.IsEmpty() ? World->SpawnActor<ActorType>(ActorClass, Transform) : Cast<ActorType>(Pool.Pop());
         check(Actor);
+        Actor->SetActorTransform(Transform);
         Actor->SetActorHiddenInGame(false);
         return Actor;
     }

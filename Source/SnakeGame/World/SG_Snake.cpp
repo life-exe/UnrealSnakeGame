@@ -4,7 +4,7 @@
 #include "World/SG_SnakeLink.h"
 #include "World/SG_WorldUtils.h"
 #include "SnakeGame/Core/Snake.h"
-#include "World/SG_SnakeObjectPool.h"
+#include "World/SG_ObjectPool.h"
 
 namespace
 {
@@ -47,7 +47,7 @@ void ASG_Snake::InitObjectPool()
 {
     if (SnakeObjectPool) return;
 
-    SnakeObjectPool = NewObject<USG_SnakeObjectPool>();
+    SnakeObjectPool = NewObject<USG_ObjectPool>();
     check(SnakeObjectPool);
     SnakeObjectPool->Reserve<ASG_SnakeLink>(GetWorld(), ReservedSnakeLinksNum, SnakeLinkClass);
 }
